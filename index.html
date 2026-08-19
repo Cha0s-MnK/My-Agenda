@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A simple four-quadrant personal agenda.">
+  <title>My Agenda</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #1f2937;
+      --muted: #667085;
+      --line: #d9dee8;
+      --surface: #ffffff;
+      --background: #f5f7fb;
+      --primary: #3451b2;
+      --primary-dark: #263d8f;
+      --danger: #b42318;
+      --shadow: 0 10px 30px rgba(31, 41, 55, 0.08);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    button, input, select, textarea { font: inherit; }
+
+    button { cursor: pointer; }
+
+    .app {
+      width: min(1180px, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 2rem 0 3rem;
+    }
+
+    .hero {
+      align-items: flex-start;
+      display: flex;
+      gap: 1rem;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+
+    .eyebrow {
+      color: var(--primary);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      margin: 0 0 0.35rem;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin: 0;
+    }
+
+    .hero-description {
+      color: var(--muted);
+      margin: 0.65rem 0 0;
+      max-width: 42rem;
+    }
+
+    .storage-badge {
+      background: #e9efff;
+      border: 1px solid #cbd7ff;
+      border-radius: 999px;
+      color: var(--primary-dark);
+      flex: 0 0 auto;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.4rem 0.7rem;
+      white-space: nowrap;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.15rem;
+    }
+
+    .add-form {
+      align-items: end;
+      display: grid;
+      gap: 0.8rem;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.7fr) auto;
+    }
+
+    .field { min-width: 0; }
+
+    .field label,
+    .prompt-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+
+    input[type="text"], select, textarea {
+      background: #fff;
+      border: 1px solid #bfc7d6;
+      border-radius: 10px;
+      color: var(--ink);
+      min-height: 2.65rem;
+      padding: 0.58rem 0.7rem;
+      width: 100%;
+    }
+
+    input[type="text"]:focus, select:focus, textarea:focus,
+    button:focus-visible, input[type="checkbox"]:focus-visible {
+      outline: 3px solid rgba(52, 81, 178, 0.25);
+      outline-offset: 2px;
+    }
+
+    .button {
+      align-items: center;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      display: inline-flex;
+      font-size: 0.86rem;
+      font-weight: 700;
+      justify-content: center;
+      min-height: 2.65rem;
+      padding: 0.55rem 0.8rem;
+      transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+    }
+
+    .button:hover { transform: translateY(-1px); }
+
+    .button-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .button-primary:hover { background: var(--primary-dark); }
+
+    .button-secondary {
+      background: #fff;
+      border-color: #bfc7d6;
+      color: var(--ink);
+    }
+
+    .button-secondary:hover { background: #f7f8fb; }
+
+    .button-danger {
+      background: #fff;
+      border-color: #f0b8b2;
+      color: var(--danger);
+    }
+
+    .button-danger:hover { background: #fff5f4; }
+
+    .utility-bar {
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      justify-content: space-between;
+      margin-top: 1rem;
+    }
+
+    .utility-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+
+    .utility-note, .footer-note {
+      color: var(--muted);
+      font-size: 0.84rem;
+      margin: 0;
+    }
+
+    .prompt-panel {
+      display: grid;
+      gap: 0.7rem;
+      margin-top: 1rem;
+    }
+
+    .prompt-heading {
+      align-items: baseline;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      justify-content: space-between;
+    }
+
+    .prompt-heading h2 { font-size: 1rem; margin: 0; }
+
+    .prompt-help { color: var(--muted); font-size: 0.84rem; }
+
+    textarea {
+      min-height: 17rem;
+      resize: vertical;
+    }
+
+    .prompt-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+
+    .quadrants {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 1rem;
+    }
+
+    .quadrant {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .quadrant[data-quadrant="urgent-important"] { --accent: #c2410c; }
+    .quadrant[data-quadrant="urgent-not-important"] { --accent: #9f1239; }
+    .quadrant[data-quadrant="important-not-urgent"] { --accent: #166534; }
+    .quadrant[data-quadrant="not-important-not-urgent"] { --accent: #475569; }
+
+    .quadrant-header {
+      align-items: flex-start;
+      border-top: 5px solid var(--accent);
+      display: flex;
+      gap: 0.75rem;
+      justify-content: space-between;
+      padding: 1rem 1rem 0.8rem;
+    }
+
+    .quadrant-header h2 {
+      font-size: 1.02rem;
+      line-height: 1.25;
+      margin: 0;
+    }
+
+    .quadrant-header p {
+      color: var(--muted);
+      font-size: 0.8rem;
+      margin: 0.25rem 0 0;
+    }
+
+    .count {
+      background: color-mix(in srgb, var(--accent) 13%, white);
+      border-radius: 999px;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 800;
+      min-width: 1.8rem;
+      padding: 0.22rem 0.5rem;
+      text-align: center;
+    }
+
+    .task-list {
+      list-style: none;
+      margin: 0;
+      padding: 0 1rem 0.7rem;
+    }
+
+    .task-item {
+      border-top: 1px solid var(--line);
+      padding: 0.75rem 0;
+    }
+
+    .task-line {
+      align-items: flex-start;
+      display: flex;
+      gap: 0.7rem;
+      justify-content: space-between;
+    }
+
+    .task-check {
+      align-items: flex-start;
+      display: flex;
+      flex: 1 1 auto;
+      gap: 0.55rem;
+      min-width: 0;
+    }
+
+    .task-check input { margin-top: 0.28rem; }
+
+    .task-text { overflow-wrap: anywhere; }
+
+    .task-item.is-complete .task-text {
+      color: var(--muted);
+      text-decoration: line-through;
+    }
+
+    .task-actions {
+      display: flex;
+      flex: 0 0 auto;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      justify-content: flex-end;
+    }
+
+    .task-actions .button {
+      font-size: 0.76rem;
+      min-height: 2.1rem;
+      padding: 0.35rem 0.55rem;
+    }
+
+    .task-meta {
+      color: var(--muted);
+      font-size: 0.76rem;
+      margin: 0.35rem 0 0 1.45rem;
+    }
+
+    .edit-form { display: grid; gap: 0.6rem; }
+
+    .edit-fields {
+      display: grid;
+      gap: 0.6rem;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.7fr);
+    }
+
+    .edit-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+
+    .empty-task {
+      color: var(--muted);
+      font-size: 0.86rem;
+      padding: 0.7rem 0;
+    }
+
+    .sr-only {
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      position: absolute;
+      width: 1px;
+      clip: rect(0, 0, 0, 0);
+    }
+
+    footer { margin-top: 1rem; }
+
+    @media (max-width: 760px) {
+      .hero { display: block; }
+      .storage-badge { display: inline-flex; margin-top: 0.9rem; }
+      .add-form, .quadrants, .edit-fields { grid-template-columns: 1fr; }
+      .task-line { display: block; }
+      .task-actions { justify-content: flex-start; margin: 0.65rem 0 0 1.45rem; }
+    }
+
+    @media (max-width: 440px) {
+      .app { width: min(100% - 1rem, 1180px); padding-top: 1rem; }
+      .card, .quadrant-header, .task-list { padding-left: 0.8rem; padding-right: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app" id="agenda-four-quadrants" aria-label="Four-quadrant agenda">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Personal task manager</p>
+        <h1>My Agenda</h1>
+        <p class="hero-description">Organise tasks by urgency and importance, then keep the next action clear.</p>
+      </div>
+      <span class="storage-badge">Saved in this browser</span>
+    </header>
+
+    <section class="card" aria-labelledby="add-task-heading">
+      <h2 id="add-task-heading" class="sr-only">Add an agenda task</h2>
+      <form class="add-form" id="add-task-form">
+        <div class="field">
+          <label for="agenda-task-input">New task</label>
+          <input id="agenda-task-input" type="text" maxlength="200" placeholder="Type a task" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="agenda-category-select">Category</label>
+          <select id="agenda-category-select">
+            <option value="urgent-important">Urgent and important</option>
+            <option value="urgent-not-important" selected>Urgent but not important</option>
+            <option value="important-not-urgent">Important but not urgent</option>
+            <option value="not-important-not-urgent">Not important and not urgent</option>
+          </select>
+        </div>
+        <button class="button button-primary" type="submit">Add task</button>
+      </form>
+    </section>
+
+    <section class="card utility-bar" aria-label="Agenda data tools">
+      <p class="utility-note">Your tasks stay on this device. Export a JSON backup to move them to another device.</p>
+      <div class="utility-actions">
+        <button class="button button-secondary" id="export-button" type="button">Export agenda</button>
+        <button class="button button-secondary" id="import-button" type="button">Import agenda</button>
+        <input id="import-file" type="file" accept="application/json,.json" hidden>
+      </div>
+    </section>
+
+    <section class="card prompt-panel" id="prompt-panel" hidden aria-labelledby="prompt-heading">
+      <div class="prompt-heading">
+        <h2 id="prompt-heading">Prompt ready</h2>
+        <span class="prompt-help">Copy this prompt and paste it into this ChatGPT conversation.</span>
+      </div>
+      <label class="prompt-label" for="agenda-prompt-text">Prompt to send to ChatGPT</label>
+      <textarea id="agenda-prompt-text" rows="12" readonly></textarea>
+      <div class="prompt-actions">
+        <button class="button button-primary" id="copy-prompt-button" type="button">Copy prompt</button>
+        <button class="button button-secondary" id="close-prompt-button" type="button">Close</button>
+      </div>
+    </section>
+
+    <div class="quadrants" aria-live="polite">
+      <section class="quadrant" data-quadrant="urgent-important" aria-labelledby="heading-urgent-important">
+        <header class="quadrant-header">
+          <div><h2 id="heading-urgent-important">Urgent and important</h2><p>Do first</p></div>
+          <span class="count" data-count>0</span>
+        </header>
+        <ul class="task-list" data-task-list></ul>
+      </section>
+
+      <section class="quadrant" data-quadrant="urgent-not-important" aria-labelledby="heading-urgent-not-important">
+        <header class="quadrant-header">
+          <div><h2 id="heading-urgent-not-important">Urgent but not important</h2><p>Delegate or handle quickly</p></div>
+          <span class="count" data-count>0</span>
+        </header>
+        <ul class="task-list" data-task-list></ul>
+      </section>
+
+      <section class="quadrant" data-quadrant="important-not-urgent" aria-labelledby="heading-important-not-urgent">
+        <header class="quadrant-header">
+          <div><h2 id="heading-important-not-urgent">Important but not urgent</h2><p>Schedule time for it</p></div>
+          <span class="count" data-count>0</span>
+        </header>
+        <ul class="task-list" data-task-list></ul>
+      </section>
+
+      <section class="quadrant" data-quadrant="not-important-not-urgent" aria-labelledby="heading-not-important-not-urgent">
+        <header class="quadrant-header">
+          <div><h2 id="heading-not-important-not-urgent">Not important and not urgent</h2><p>Do later or skip</p></div>
+          <span class="count" data-count>0</span>
+        </header>
+        <ul class="task-list" data-task-list></ul>
+      </section>
+    </div>
+
+    <p class="footer-note" id="agenda-status" aria-live="polite">Unfinished tasks are shown with an unchecked box.</p>
+    <footer><p class="footer-note">My Agenda is a public, static app. Task data is stored locally in your browser and is not committed to this repository.</p></footer>
+  </main>
+
+  <script>
+    (function () {
+      "use strict";
+
+      var root = document.getElementById("agenda-four-quadrants");
+      var storageKey = "agenda-four-quadrants-v2";
+      var categories = [
+        { value: "urgent-important", label: "Urgent and important" },
+        { value: "urgent-not-important", label: "Urgent but not important" },
+        { value: "important-not-urgent", label: "Important but not urgent" },
+        { value: "not-important-not-urgent", label: "Not important and not urgent" }
+      ];
+      var initialTasks = [];
+      var taskInput = document.getElementById("agenda-task-input");
+      var categorySelect = document.getElementById("agenda-category-select");
+      var status = document.getElementById("agenda-status");
+      var promptPanel = document.getElementById("prompt-panel");
+      var promptInput = document.getElementById("agenda-prompt-text");
+      var editingId = null;
+      var tasks = loadTasks();
+
+      function isValidCategory(value) {
+        return categories.some(function (category) { return category.value === value; });
+      }
+
+      function normaliseTasks(value) {
+        if (!Array.isArray(value)) return null;
+        return value.filter(function (task) {
+          return task && typeof task.id === "string" && typeof task.text === "string" &&
+            task.text.trim() && task.text.length <= 200 && isValidCategory(task.category);
+        }).map(function (task) {
+          return {
+            id: task.id,
+            text: task.text.trim(),
+            category: task.category,
+            complete: Boolean(task.complete)
+          };
+        });
+      }
+
+      function loadTasks() {
+        try {
+          var saved = window.localStorage.getItem(storageKey);
+          if (saved) {
+            var parsed = normaliseTasks(JSON.parse(saved));
+            if (parsed) return parsed;
+          }
+        } catch (error) {
+          // Fall back to the empty public-safe agenda.
+        }
+        return initialTasks.slice();
+      }
+
+      function saveTasks() {
+        try {
+          window.localStorage.setItem(storageKey, JSON.stringify(tasks));
+        } catch (error) {
+          status.textContent = "This browser could not save the latest change.";
+        }
+      }
+
+      function makeId() {
+        return "task-" + Date.now() + "-" + Math.random().toString(16).slice(2);
+      }
+
+      function addCategoryOptions(select, selectedValue) {
+        categories.forEach(function (category) {
+          var option = document.createElement("option");
+          option.value = category.value;
+          option.textContent = category.label;
+          option.selected = category.value === selectedValue;
+          select.appendChild(option);
+        });
+      }
+
+      function buildAgendaPrompt(focusTask) {
+        var lines = [
+          "Please regenerate my four-quadrant agenda in concise, clear British English.",
+          "",
+          "Requirements:",
+          "- Keep exactly the same four categories and include every task.",
+          "- Translate non-English text and rewrite each task as a complete, short, actionable task.",
+          "- Preserve quantities, names, dates, destinations, and intended meaning. Do not invent missing details.",
+          "- Preserve each task's finished or unfinished status.",
+          "- Return only the complete regenerated agenda as a clear four-section checklist.",
+          "- Focus especially on this task: " + focusTask.text,
+          "",
+          "Current agenda:"
+        ];
+
+        categories.forEach(function (category) {
+          lines.push("");
+          lines.push(category.label + ":");
+          var categoryTasks = tasks.filter(function (task) { return task.category === category.value; });
+          if (!categoryTasks.length) {
+            lines.push("- No tasks");
+            return;
+          }
+          categoryTasks.forEach(function (task) {
+            lines.push("- [" + (task.complete ? "finished" : "unfinished") + "] " + task.text);
+          });
+        });
+
+        return lines.join("\n");
+      }
+
+      function setStatus(message) {
+        status.textContent = message;
+      }
+
+      function createButton(label, className, handler, ariaLabel) {
+        var button = document.createElement("button");
+        button.className = "button " + className;
+        button.type = "button";
+        button.textContent = label;
+        if (ariaLabel) button.setAttribute("aria-label", ariaLabel);
+        button.addEventListener("click", handler);
+        return button;
+      }
+
+      function render() {
+        root.querySelectorAll("[data-quadrant]").forEach(function (quadrant) {
+          var category = quadrant.getAttribute("data-quadrant");
+          var list = quadrant.querySelector("[data-task-list]");
+          var count = quadrant.querySelector("[data-count]");
+          var categoryTasks = tasks.filter(function (task) { return task.category === category; });
+
+          list.textContent = "";
+          count.textContent = String(categoryTasks.length);
+
+          if (!categoryTasks.length) {
+            var empty = document.createElement("li");
+            empty.className = "empty-task";
+            empty.textContent = "No tasks yet";
+            list.appendChild(empty);
+            return;
+          }
+
+          categoryTasks.forEach(function (task) {
+            var item = document.createElement("li");
+            item.className = "task-item" + (task.complete ? " is-complete" : "");
+
+            if (editingId === task.id) {
+              var editForm = document.createElement("form");
+              editForm.className = "edit-form";
+              editForm.setAttribute("aria-label", "Edit task");
+
+              var editFields = document.createElement("div");
+              editFields.className = "edit-fields";
+
+              var editInput = document.createElement("input");
+              editInput.type = "text";
+              editInput.maxLength = 200;
+              editInput.value = task.text;
+              editInput.setAttribute("aria-label", "Task text");
+
+              var editCategory = document.createElement("select");
+              editCategory.setAttribute("aria-label", "Task category");
+              addCategoryOptions(editCategory, task.category);
+
+              editFields.appendChild(editInput);
+              editFields.appendChild(editCategory);
+
+              var editActions = document.createElement("div");
+              editActions.className = "edit-actions";
+              var saveButton = createButton("Save", "button-primary", function () {}, "Save task");
+              saveButton.type = "submit";
+              var cancelButton = createButton("Cancel", "button-secondary", function () {
+                editingId = null;
+                render();
+                setStatus("Edit cancelled.");
+              }, "Cancel editing");
+
+              editActions.appendChild(saveButton);
+              editActions.appendChild(cancelButton);
+              editForm.appendChild(editFields);
+              editForm.appendChild(editActions);
+              editForm.addEventListener("submit", function (event) {
+                event.preventDefault();
+                var updatedText = editInput.value.trim();
+                if (!updatedText) {
+                  setStatus("Please enter a task first.");
+                  editInput.focus();
+                  return;
+                }
+                task.text = updatedText;
+                task.category = editCategory.value;
+                editingId = null;
+                saveTasks();
+                render();
+                setStatus("Task updated.");
+              });
+
+              item.appendChild(editForm);
+              list.appendChild(item);
+              editInput.focus();
+              return;
+            }
+
+            var line = document.createElement("div");
+            line.className = "task-line";
+
+            var check = document.createElement("label");
+            check.className = "task-check";
+            var checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.checked = task.complete;
+            checkbox.setAttribute("aria-label", "Mark task complete: " + task.text);
+            checkbox.addEventListener("change", function () {
+              task.complete = checkbox.checked;
+              saveTasks();
+              render();
+              setStatus(task.complete ? "Task marked finished." : "Task marked unfinished.");
+            });
+
+            var taskText = document.createElement("span");
+            taskText.className = "task-text";
+            taskText.textContent = task.text;
+            check.appendChild(checkbox);
+            check.appendChild(taskText);
+
+            var taskActions = document.createElement("div");
+            taskActions.className = "task-actions";
+            taskActions.appendChild(createButton("Polish", "button-secondary", function () {
+              promptInput.value = buildAgendaPrompt(task);
+              promptPanel.hidden = false;
+              promptInput.focus();
+              promptInput.select();
+              setStatus("Prompt ready. Copy it and paste it into this ChatGPT conversation.");
+            }, "Prepare a ChatGPT polishing prompt for: " + task.text));
+            taskActions.appendChild(createButton("Edit", "button-secondary", function () {
+              editingId = task.id;
+              render();
+              setStatus("Editing task.");
+            }, "Edit task: " + task.text));
+            taskActions.appendChild(createButton("Delete", "button-danger", function () {
+              tasks = tasks.filter(function (candidate) { return candidate.id !== task.id; });
+              saveTasks();
+              render();
+              setStatus("Task deleted.");
+            }, "Delete task: " + task.text));
+
+            line.appendChild(check);
+            line.appendChild(taskActions);
+
+            var meta = document.createElement("div");
+            meta.className = "task-meta";
+            meta.textContent = task.complete ? "Finished" : "Unfinished";
+            item.appendChild(line);
+            item.appendChild(meta);
+            list.appendChild(item);
+          });
+        });
+      }
+
+      function downloadAgenda() {
+        var payload = {
+          format: "my-agenda-json",
+          version: 1,
+          exportedAt: new Date().toISOString(),
+          tasks: tasks
+        };
+        var blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+        var url = URL.createObjectURL(blob);
+        var link = document.createElement("a");
+        link.href = url;
+        link.download = "my-agenda.json";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        setStatus("Agenda exported as my-agenda.json.");
+      }
+
+      document.getElementById("add-task-form").addEventListener("submit", function (event) {
+        event.preventDefault();
+        var text = taskInput.value.trim();
+        if (!text) {
+          setStatus("Please enter a task first.");
+          taskInput.focus();
+          return;
+        }
+        tasks.push({ id: makeId(), text: text, category: categorySelect.value, complete: false });
+        saveTasks();
+        render();
+        taskInput.value = "";
+        taskInput.focus();
+        setStatus("Task added as unfinished.");
+      });
+
+      document.getElementById("copy-prompt-button").addEventListener("click", function () {
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(promptInput.value).then(function () {
+            setStatus("Prompt copied. Paste it into this ChatGPT conversation.");
+          }).catch(function () {
+            promptInput.focus();
+            promptInput.select();
+            setStatus("Prompt selected. Copy it with Ctrl+C or Cmd+C.");
+          });
+          return;
+        }
+        promptInput.focus();
+        promptInput.select();
+        setStatus("Prompt selected. Copy it with Ctrl+C or Cmd+C.");
+      });
+
+      document.getElementById("close-prompt-button").addEventListener("click", function () {
+        promptPanel.hidden = true;
+        setStatus("Prompt closed.");
+      });
+
+      document.getElementById("export-button").addEventListener("click", downloadAgenda);
+      document.getElementById("import-button").addEventListener("click", function () {
+        document.getElementById("import-file").click();
+      });
+      document.getElementById("import-file").addEventListener("change", function (event) {
+        var file = event.target.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function () {
+          try {
+            var parsed = JSON.parse(reader.result);
+            var importedTasks = normaliseTasks(Array.isArray(parsed) ? parsed : parsed.tasks);
+            if (!importedTasks) throw new Error("Invalid agenda format");
+            if (!window.confirm("Replace the current agenda with the imported tasks?")) return;
+            tasks = importedTasks;
+            saveTasks();
+            render();
+            setStatus("Agenda imported successfully.");
+          } catch (error) {
+            setStatus("Could not import that file. Please choose a valid My Agenda JSON file.");
+          } finally {
+            event.target.value = "";
+          }
+        };
+        reader.readAsText(file);
+      });
+
+      render();
+    }());
+  </script>
+</body>
+</html>
