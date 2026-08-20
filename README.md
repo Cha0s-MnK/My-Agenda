@@ -1,4 +1,4 @@
-# My Agenda
+# My Agenda (Cha0s_MnK)
 
 My Agenda is a public, static four-quadrant agenda app. The shared agenda lives in [`agenda.json`](./agenda.json), so every device can load the same data from this repository.
 
@@ -38,6 +38,8 @@ The app uses GitHub as the shared source of truth:
 5. Another device can load that commit automatically or use **Refresh from GitHub**.
 
 Currently, only **Add task** and an item's **Save** button trigger an automatic commit. Completing, deleting, importing, or rearranging tasks changes the browser copy first and will be included by the next automatic commit.
+
+Clicking **Cha0s_MnK** in the page title rechecks a token already stored in the current browser tab. The public source contains no GitHub token.
 
 The app does not use a webhook, GitHub App, Device Flow, client ID, or client secret. GitHub's REST API is used only for the authenticated save and permission check; public agenda loading does not require authentication.
 
