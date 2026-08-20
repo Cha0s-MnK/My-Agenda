@@ -442,7 +442,7 @@
         <button class="button button-primary" id="save-github-button" type="button">Save to GitHub</button>
         <button class="button button-secondary" id="refresh-github-button" type="button">Refresh from GitHub</button>
         <button class="button button-secondary" id="github-connect-button" type="button">Connect GitHub token</button>
-        <button class="button button-secondary" id="export-button" type="button">Export agenda</button>
+        <button class="button button-secondary" id="polish-agenda-button" type="button">Polish agenda</button>
         <button class="button button-secondary" id="import-button" type="button">Import agenda</button>
         <input id="import-file" type="file" accept="application/json,.json" hidden>
       </div>
@@ -844,9 +844,9 @@
         });
       }
 
-      function buildAgendaPrompt(focusTask) {
+      function buildAgendaPrompt() {
         var lines = [
-          "Please regenerate my four-quadrant agenda in concise, clear British English.",
+          "Please polish my complete four-quadrant agenda in concise, clear British English.",
           "",
           "Requirements:",
           "- Keep exactly the same four categories and include every task.",
@@ -854,7 +854,6 @@
           "- Preserve quantities, names, dates, destinations, and intended meaning. Do not invent missing details.",
           "- Preserve each task's finished or unfinished status.",
           "- Return only the complete regenerated agenda as a clear four-section checklist.",
-          "- Focus especially on this task: " + focusTask.text,
           "",
           "Current agenda:"
         ];
@@ -992,13 +991,6 @@
 
             var taskActions = document.createElement("div");
             taskActions.className = "task-actions";
-            taskActions.appendChild(createButton("Polish", "button-secondary", function () {
-              promptInput.value = buildAgendaPrompt(task);
-              promptPanel.hidden = false;
-              promptInput.focus();
-              promptInput.select();
-              setStatus("Prompt ready. Copy it and paste it into this ChatGPT conversation.");
-            }, "Prepare a ChatGPT polishing prompt for: " + task.text));
             taskActions.appendChild(createButton("Edit", "button-secondary", function () {
               editingId = task.id;
               render();
@@ -1022,25 +1014,6 @@
             list.appendChild(item);
           });
         });
-      }
-
-      function downloadAgenda() {
-        var payload = {
-          format: "my-agenda-json",
-          version: 1,
-          exportedAt: new Date().toISOString(),
-          tasks: tasks
-        };
-        var blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
-        var url = URL.createObjectURL(blob);
-        var link = document.createElement("a");
-        link.href = url;
-        link.download = "my-agenda.json";
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        URL.revokeObjectURL(url);
-        setStatus("Agenda exported as my-agenda.json.");
       }
 
       document.getElementById("add-task-form").addEventListener("submit", function (event) {
@@ -1080,6 +1053,14 @@
         setStatus("Prompt closed.");
       });
 
+      document.getElementById("polish-agenda-button").addEventListener("click", function () {
+        promptInput.value = buildAgendaPrompt();
+        promptPanel.hidden = false;
+        promptInput.focus();
+        promptInput.select();
+        setStatus("Agenda-wide polishing prompt ready. Copy it and paste it into this ChatGPT conversation.");
+      });
+
       saveTokenButton.addEventListener("click", function () {
         connectGitHubToken();
       });
@@ -1102,7 +1083,6 @@
       refreshGithubButton.addEventListener("click", loadRemoteAgenda);
       saveGithubButton.addEventListener("click", saveToGitHub);
 
-      document.getElementById("export-button").addEventListener("click", downloadAgenda);
       document.getElementById("import-button").addEventListener("click", function () {
         document.getElementById("import-file").click();
       });
