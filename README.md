@@ -15,7 +15,7 @@ It organises tasks into:
 - Move a task to another quadrant while editing.
 - Generate one copyable prompt for ChatGPT to polish the complete agenda in concise British English.
 - Load the public `agenda.json` automatically when the app opens.
-- Save the current agenda to GitHub with one click, creating a public commit.
+- Automatically commit new tasks and saved item edits to GitHub when a token is connected.
 - Keep a local browser copy for fast editing and offline fallback.
 - Import an agenda from JSON.
 
@@ -33,9 +33,11 @@ The app uses GitHub as the shared source of truth:
 
 1. When the page opens, it loads the latest public `agenda.json` from the `main` branch.
 2. Adding, editing, completing, deleting, importing, or refreshing tasks updates the current browser copy first.
-3. **Save to GitHub** checks the connected token and confirms that it has write permission for `My-Agenda`.
+3. After **Add task** or an item **Save**, the app checks the connected token and confirms that it has write permission for `My-Agenda`.
 4. The app reads the current file version, then updates `agenda.json` through GitHub's Contents API, creating a new public commit.
 5. Another device can load that commit automatically or use **Refresh from GitHub**.
+
+Currently, only **Add task** and an item's **Save** button trigger an automatic commit. Completing, deleting, importing, or rearranging tasks changes the browser copy first and will be included by the next automatic commit.
 
 The app does not use a webhook, GitHub App, Device Flow, client ID, or client secret. GitHub's REST API is used only for the authenticated save and permission check; public agenda loading does not require authentication.
 
@@ -49,7 +51,7 @@ Because this is a static GitHub Pages site, it uses a fine-grained personal acce
 4. Under **Repository permissions**, set **Contents** to **Read and write**. Leave other permissions at their defaults.
 5. Generate the token and copy it immediately. GitHub will not show the complete token again.
 6. Open the agenda site, expand **One-time GitHub sync setup**, paste the token, and select **Connect token**.
-7. Select **Save to GitHub** to create a public commit in `agenda.json`.
+7. After connecting the token, adding a task or saving an edited task automatically creates a public commit in `agenda.json`.
 
 > **Important:** GitHub displays the complete token only once. If you leave the token-creation page before copying it, the token cannot be recovered; generate a new token instead. Never put the token in this repository or send it in a message.
 
