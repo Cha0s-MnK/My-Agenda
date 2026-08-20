@@ -1,4 +1,3 @@
-JavaScript syntax OK
 <!doctype html>
 <html lang="en-GB">
 <head>
@@ -109,7 +108,7 @@ JavaScript syntax OK
       margin-bottom: 0.35rem;
     }
 
-    input[type="text"], select, textarea {
+    input[type="text"], input[type="password"], select, textarea {
       background: #fff;
       border: 1px solid #bfc7d6;
       border-radius: 10px;
@@ -119,7 +118,7 @@ JavaScript syntax OK
       width: 100%;
     }
 
-    input[type="text"]:focus, select:focus, textarea:focus,
+    input[type="text"]:focus, input[type="password"]:focus, select:focus, textarea:focus,
     button:focus-visible, input[type="checkbox"]:focus-visible {
       outline: 3px solid rgba(52, 81, 178, 0.25);
       outline-offset: 2px;
@@ -213,22 +212,6 @@ JavaScript syntax OK
       color: var(--muted);
       font-size: 0.84rem;
       margin: 0;
-    }
-
-    .github-device-instructions {
-      background: #f7f8fb;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      color: var(--ink);
-      display: grid;
-      gap: 0.25rem;
-      margin: 0;
-      padding: 0.7rem;
-    }
-
-    .github-device-instructions strong {
-      font-size: 1.05rem;
-      letter-spacing: 0.08em;
     }
 
     .utility-note, .footer-note {
@@ -458,8 +441,7 @@ JavaScript syntax OK
       <div class="utility-actions">
         <button class="button button-primary" id="save-github-button" type="button">Save to GitHub</button>
         <button class="button button-secondary" id="refresh-github-button" type="button">Refresh from GitHub</button>
-        <button class="button button-secondary" id="github-login-button" type="button">Log in with GitHub</button>
-        <button class="button button-secondary" id="github-logout-button" type="button" hidden>Log out</button>
+        <button class="button button-secondary" id="github-connect-button" type="button">Connect GitHub token</button>
         <button class="button button-secondary" id="export-button" type="button">Export agenda</button>
         <button class="button button-secondary" id="import-button" type="button">Import agenda</button>
         <input id="import-file" type="file" accept="application/json,.json" hidden>
@@ -467,20 +449,18 @@ JavaScript syntax OK
       <details class="github-setup">
         <summary>One-time GitHub sync setup</summary>
         <div class="github-setup-content">
-          <p>Create a GitHub App with <strong>Contents: Read and write</strong> permission, enable Device Flow, and install it on this repository only. The app never receives your GitHub password.</p>
-          <p>Paste the app's public client ID below. Do not paste a client secret or access token.</p>
+          <p>This static site uses a fine-grained GitHub token for saving. It never receives your GitHub password.</p>
+          <p><a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Create a fine-grained token on GitHub</a> with access to <strong>My-Agenda</strong> only and <strong>Contents: Read and write</strong> permission. Set an expiry date.</p>
+          <p>Paste the token below. It is masked and stored only in this browser tab; do not commit or share it.</p>
           <div class="field">
-            <label for="github-client-id">GitHub App client ID</label>
-            <input id="github-client-id" type="text" placeholder="Example: Iv1.xxxxxxxxxxxxxxxx" autocomplete="off">
+            <label for="github-token">Fine-grained GitHub token</label>
+            <input id="github-token" type="password" placeholder="github_pat_..." autocomplete="off" spellcheck="false">
           </div>
           <div class="utility-actions">
-            <button class="button button-secondary" id="save-client-id-button" type="button">Save client ID</button>
+            <button class="button button-secondary" id="save-token-button" type="button">Connect token</button>
+            <button class="button button-secondary" id="clear-token-button" type="button" hidden>Clear token</button>
           </div>
           <p id="github-user-status">Not connected to GitHub.</p>
-          <p class="github-device-instructions" id="github-device-instructions" hidden>
-            <span>Open <a id="github-device-link" href="https://github.com/login/device" target="_blank" rel="noopener">github.com/login/device</a> and enter:</span>
-            <strong id="github-device-code"></strong>
-          </p>
         </div>
       </details>
     </section>
@@ -546,15 +526,11 @@ JavaScript syntax OK
         owner: "Cha0s-MnK",
         name: "My-Agenda",
         branch: "main",
-        path: "agenda.json",
-        id: "1339800231"
+        path: "agenda.json"
       };
       var githubApiBase = "https://api.github.com";
       var rawAgendaUrl = "https://raw.githubusercontent.com/Cha0s-MnK/My-Agenda/main/agenda.json";
-      var clientIdStorageKey = "my-agenda-github-client-id";
-      var accessTokenStorageKey = "my-agenda-github-access-token";
-      var refreshTokenStorageKey = "my-agenda-github-refresh-token";
-      var accessTokenExpiryStorageKey = "my-agenda-github-access-token-expiry";
+      var githubTokenStorageKey = "my-agenda-github-fine-grained-token";
       var categories = [
         { value: "urgent-important", label: "Urgent and important" },
         { value: "urgent-not-important", label: "Urgent but not important" },
@@ -567,23 +543,18 @@ JavaScript syntax OK
       var status = document.getElementById("agenda-status");
       var syncStatus = document.getElementById("sync-status");
       var githubUserStatus = document.getElementById("github-user-status");
-      var githubClientIdInput = document.getElementById("github-client-id");
-      var githubDeviceInstructions = document.getElementById("github-device-instructions");
-      var githubDeviceCode = document.getElementById("github-device-code");
-      var githubDeviceLink = document.getElementById("github-device-link");
+      var githubTokenInput = document.getElementById("github-token");
+      var saveTokenButton = document.getElementById("save-token-button");
+      var clearTokenButton = document.getElementById("clear-token-button");
       var githubSetup = document.querySelector(".github-setup");
       var saveGithubButton = document.getElementById("save-github-button");
       var refreshGithubButton = document.getElementById("refresh-github-button");
-      var loginGithubButton = document.getElementById("github-login-button");
-      var logoutGithubButton = document.getElementById("github-logout-button");
+      var connectGithubButton = document.getElementById("github-connect-button");
       var promptPanel = document.getElementById("prompt-panel");
       var promptInput = document.getElementById("agenda-prompt-text");
       var editingId = null;
-      var githubClientId = readLocalStorage(clientIdStorageKey) || "";
-      var accessToken = readSessionStorage(accessTokenStorageKey);
-      var refreshToken = readSessionStorage(refreshTokenStorageKey);
-      var accessTokenExpiry = Number(readSessionStorage(accessTokenExpiryStorageKey) || 0);
-      var loginInProgress = false;
+      var githubToken = readSessionStorage(githubTokenStorageKey);
+      var authInProgress = false;
       var tasks = loadTasks();
 
       function isValidCategory(value) {
@@ -626,14 +597,6 @@ JavaScript syntax OK
           }
         } catch (error) {
           status.textContent = "This browser could not save the latest change.";
-        }
-      }
-
-      function readLocalStorage(key) {
-        try {
-          return window.localStorage.getItem(key);
-        } catch (error) {
-          return null;
         }
       }
 
@@ -707,195 +670,81 @@ JavaScript syntax OK
           "/contents/" + repository.path + "?ref=" + encodeURIComponent(repository.branch);
       }
 
-      function sleep(milliseconds) {
-        return new Promise(function (resolve) { window.setTimeout(resolve, milliseconds); });
-      }
-
-      function saveTokenResponse(tokenResponse) {
-        if (!tokenResponse || !tokenResponse.access_token) {
-          throw new Error("GitHub did not return an access token.");
-        }
-        accessToken = tokenResponse.access_token;
-        refreshToken = tokenResponse.refresh_token || refreshToken || null;
-        accessTokenExpiry = tokenResponse.expires_in
-          ? Date.now() + (Number(tokenResponse.expires_in) * 1000)
-          : 0;
-        writeSessionStorage(accessTokenStorageKey, accessToken);
-        if (refreshToken) {
-          writeSessionStorage(refreshTokenStorageKey, refreshToken);
-        } else {
-          removeSessionStorage(refreshTokenStorageKey);
-        }
-        if (accessTokenExpiry) {
-          writeSessionStorage(accessTokenExpiryStorageKey, String(accessTokenExpiry));
-        } else {
-          removeSessionStorage(accessTokenExpiryStorageKey);
-        }
-        updateAuthUi();
-      }
-
-      function clearGitHubSession() {
-        accessToken = null;
-        refreshToken = null;
-        accessTokenExpiry = 0;
-        removeSessionStorage(accessTokenStorageKey);
-        removeSessionStorage(refreshTokenStorageKey);
-        removeSessionStorage(accessTokenExpiryStorageKey);
-        githubDeviceInstructions.hidden = true;
+      function clearGitHubToken() {
+        githubToken = null;
+        githubTokenInput.value = "";
+        removeSessionStorage(githubTokenStorageKey);
         githubUserStatus.textContent = "Not connected to GitHub.";
         updateAuthUi();
       }
 
       function updateAuthUi() {
-        githubClientIdInput.value = githubClientId;
-        var hasSession = Boolean(accessToken || refreshToken);
-        loginGithubButton.hidden = hasSession;
-        logoutGithubButton.hidden = !hasSession;
-        if (!hasSession && !loginInProgress) {
+        var hasToken = Boolean(githubToken);
+        connectGithubButton.textContent = hasToken ? "GitHub connected" : "Connect GitHub token";
+        saveTokenButton.textContent = hasToken ? "Verify token" : "Connect token";
+        clearTokenButton.hidden = !hasToken;
+        if (!hasToken && !authInProgress) {
           githubUserStatus.textContent = "Not connected to GitHub.";
-        } else if (hasSession && githubUserStatus.textContent === "Not connected to GitHub.") {
-          githubUserStatus.textContent = "GitHub session available; write access will be checked when you save.";
-        }
-      }
-
-      async function refreshAccessTokenIfNeeded() {
-        if (accessToken && (!accessTokenExpiry || accessTokenExpiry - Date.now() > 60000)) {
-          return accessToken;
-        }
-        if (!refreshToken || !githubClientId) {
-          if (accessToken && accessTokenExpiry && accessTokenExpiry <= Date.now()) {
-            clearGitHubSession();
-          }
-          return null;
-        }
-
-        try {
-          var refreshed = await requestJson("https://github.com/login/oauth/access_token", {
-            method: "POST",
-            headers: { Accept: "application/json", "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams({
-              client_id: githubClientId,
-              grant_type: "refresh_token",
-              refresh_token: refreshToken
-            })
-          });
-          saveTokenResponse(refreshed);
-          return accessToken;
-        } catch (error) {
-          clearGitHubSession();
-          return null;
-        }
-      }
-
-      async function requestGitHubDeviceCode() {
-        return requestJson("https://github.com/login/device/code", {
-          method: "POST",
-          headers: { Accept: "application/json", "Content-Type": "application/x-www-form-urlencoded" },
-          body: new URLSearchParams({
-            client_id: githubClientId,
-            repository_id: repository.id
-          })
-        });
-      }
-
-      async function pollForGitHubToken(device) {
-        var interval = Math.max(Number(device.interval) || 5, 5) * 1000;
-        var deadline = Date.now() + ((Number(device.expires_in) || 900) * 1000);
-
-        while (Date.now() < deadline) {
-          await sleep(interval);
-          var response = await fetch("https://github.com/login/oauth/access_token", {
-            method: "POST",
-            headers: { Accept: "application/json", "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams({
-              client_id: githubClientId,
-              device_code: device.device_code,
-              grant_type: "urn:ietf:params:oauth:grant-type:device_code",
-              repository_id: repository.id
-            })
-          });
-          var result = {};
-          try {
-            result = await response.json();
-          } catch (error) {
-            result = {};
-          }
-
-          if (response.ok && result.access_token) return result;
-          if (result.error === "authorization_pending") continue;
-          if (result.error === "slow_down") {
-            interval += 5000;
-            continue;
-          }
-          if (result.error === "expired_token") throw new Error("The GitHub device code expired. Please try again.");
-          if (result.error === "access_denied") throw new Error("GitHub authorisation was cancelled.");
-          if (result.error === "device_flow_disabled") {
-            throw new Error("Device Flow is disabled for this GitHub App. Enable it in the app settings.");
-          }
-          throw new Error(result.error_description || result.error || "GitHub authorisation failed.");
-        }
-
-        throw new Error("The GitHub device code expired. Please try again.");
-      }
-
-      async function startGitHubLogin() {
-        if (loginInProgress) return;
-        if (!githubClientId) {
-          setSyncStatus("Add the GitHub App client ID in the one-time setup section first.");
-          document.querySelector(".github-setup").open = true;
-          githubClientIdInput.focus();
-          return;
-        }
-
-        loginInProgress = true;
-        loginGithubButton.disabled = true;
-        githubUserStatus.textContent = "Requesting a GitHub device code...";
-        setSyncStatus("Open the GitHub device link and approve access for this agenda.");
-        try {
-          var device = await requestGitHubDeviceCode();
-          var verificationUri = device.verification_uri_complete || device.verification_uri || "https://github.com/login/device";
-          githubDeviceLink.href = verificationUri;
-          githubDeviceCode.textContent = device.user_code || "";
-          githubSetup.open = true;
-          githubDeviceInstructions.hidden = false;
-          githubUserStatus.textContent = "Waiting for GitHub authorisation...";
-          var tokenResponse = await pollForGitHubToken(device);
-          saveTokenResponse(tokenResponse);
-          githubDeviceInstructions.hidden = true;
-          githubUserStatus.textContent = "GitHub account connected. Write access will be checked when you save.";
-          setSyncStatus("GitHub account connected. You can now save the public agenda.");
-        } catch (error) {
-          setSyncStatus(error.message || "GitHub login could not be completed.");
-          githubUserStatus.textContent = "GitHub login was not completed.";
-          throw error;
-        } finally {
-          loginInProgress = false;
-          loginGithubButton.disabled = false;
-          updateAuthUi();
+        } else if (hasToken && githubUserStatus.textContent === "Not connected to GitHub.") {
+          githubUserStatus.textContent = "Token available; write access will be checked when you save.";
         }
       }
 
       async function ensureGitHubWriteAccess() {
-        var token = await refreshAccessTokenIfNeeded();
-        if (!token) {
-          await startGitHubLogin();
-          token = await refreshAccessTokenIfNeeded();
-        }
-        if (!token) throw new Error("Please connect a GitHub account first.");
+        if (!githubToken) throw new Error("Connect a fine-grained GitHub token first.");
 
-        var repo = await githubRequest("/repos/" + repository.owner + "/" + repository.name, token);
+        var repo = await githubRequest("/repos/" + repository.owner + "/" + repository.name, githubToken);
         if (!repo.permissions || !repo.permissions.push) {
           githubUserStatus.textContent = "Connected account is read-only for this repository.";
-          throw new Error("This GitHub account cannot write to My Agenda. Only the owner or a collaborator with write permission can save.");
+          throw new Error("This token cannot write to My Agenda. Check that Contents is set to Read and write and that the token includes My-Agenda.");
         }
 
         try {
-          var user = await githubRequest("/user", token);
+          var user = await githubRequest("/user", githubToken);
           githubUserStatus.textContent = "Connected as @" + (user.login || "GitHub user") + "; write access confirmed.";
         } catch (error) {
           githubUserStatus.textContent = "GitHub write access confirmed.";
         }
-        return token;
+        return githubToken;
+      }
+
+      async function connectGitHubToken() {
+        if (authInProgress) return;
+        githubSetup.open = true;
+        var enteredToken = githubTokenInput.value.trim();
+        if (enteredToken) {
+          githubToken = enteredToken;
+          writeSessionStorage(githubTokenStorageKey, githubToken);
+        }
+        if (!githubToken) {
+          setSyncStatus("Paste a fine-grained GitHub token first.");
+          githubTokenInput.focus();
+          return;
+        }
+
+        authInProgress = true;
+        saveTokenButton.disabled = true;
+        connectGithubButton.disabled = true;
+        githubUserStatus.textContent = "Checking GitHub token and repository write access...";
+        setSyncStatus("Checking GitHub token and repository write access...");
+        try {
+          await ensureGitHubWriteAccess();
+          setSyncStatus("GitHub token verified. You can now save the public agenda.");
+          setStatus("GitHub write access verified.");
+        } catch (error) {
+          if (error.status === 401) {
+            clearGitHubToken();
+            setSyncStatus("GitHub rejected the token. Create a new fine-grained token and check its repository permission.");
+          } else {
+            setSyncStatus(error.message || "The GitHub token could not be verified.");
+          }
+          setStatus("GitHub access was not verified.");
+        } finally {
+          authInProgress = false;
+          saveTokenButton.disabled = false;
+          connectGithubButton.disabled = false;
+          updateAuthUi();
+        }
       }
 
       async function loadRemoteAgenda() {
@@ -963,7 +812,12 @@ JavaScript syntax OK
           setSyncStatus("Saved to GitHub in public commit " + commitSha + ".");
           setStatus("Agenda saved publicly to GitHub.");
         } catch (error) {
-          if (error.status === 409) {
+          if (error.status === 401) {
+            clearGitHubToken();
+            setSyncStatus("GitHub rejected the token. Connect a new fine-grained token with access to My-Agenda.");
+          } else if (error.status === 403) {
+            setSyncStatus("GitHub refused the write. Check that the token has Contents: Read and write permission.");
+          } else if (error.status === 409) {
             setSyncStatus("Save conflict: the agenda changed on another device. Refresh, review it, then save again.");
           } else {
             setSyncStatus(error.message || "The agenda could not be saved to GitHub.");
@@ -1221,32 +1075,23 @@ JavaScript syntax OK
         setStatus("Prompt closed.");
       });
 
-      document.getElementById("save-client-id-button").addEventListener("click", function () {
-        var clientId = githubClientIdInput.value.trim();
-        if (!clientId) {
-          setSyncStatus("Please enter the GitHub App client ID first.");
-          githubClientIdInput.focus();
-          return;
-        }
-        githubClientId = clientId;
-        try {
-          window.localStorage.setItem(clientIdStorageKey, githubClientId);
-        } catch (error) {
-          setSyncStatus("The client ID could not be stored in this browser.");
-          return;
-        }
-        setSyncStatus("GitHub App client ID saved in this browser.");
-        githubUserStatus.textContent = "Ready to connect to GitHub.";
-        updateAuthUi();
+      saveTokenButton.addEventListener("click", function () {
+        connectGitHubToken();
       });
 
-      loginGithubButton.addEventListener("click", function () {
-        startGitHubLogin().catch(function () {});
+      clearTokenButton.addEventListener("click", function () {
+        clearGitHubToken();
+        setSyncStatus("GitHub token cleared from this browser tab. The agenda remains publicly readable.");
       });
 
-      logoutGithubButton.addEventListener("click", function () {
-        clearGitHubSession();
-        setSyncStatus("Logged out of GitHub. The agenda remains publicly readable.");
+      connectGithubButton.addEventListener("click", function () {
+        githubSetup.open = true;
+        if (githubToken) {
+          connectGitHubToken();
+        } else {
+          setSyncStatus("Paste a fine-grained GitHub token in the setup section first.");
+          githubTokenInput.focus();
+        }
       });
 
       refreshGithubButton.addEventListener("click", loadRemoteAgenda);
