@@ -1,11 +1,23 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-20T06:04:09.079Z",
+  "updatedAt": "2026-08-20T06:27:05.809Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
       "text": "Revise the High-z SMBH Seeds paper.",
+      "category": "important-not-urgent",
+      "complete": false
+    },
+    {
+      "id": "task-1787206358875-0485ce3de137b",
+      "text": "Make Arepo-CD compilablr with hierarchical gravity mode",
+      "category": "important-not-urgent",
+      "complete": false
+    },
+    {
+      "id": "task-1787206953408-98c895bf182208",
+      "text": "transplant Arepo-CD to Arepo-2",
       "category": "important-not-urgent",
       "complete": false
     }
