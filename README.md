@@ -23,24 +23,25 @@ It organises tasks into:
 
 This repository is public. Anyone can read the agenda, its task text, and its complete commit history. Anyone may also copy or fork the repository.
 
-Only the repository owner or a GitHub collaborator with write permission can save directly to this repository. A normal GitHub login is not enough by itself: the app checks the account's repository write permission before it creates a commit. Other people can read the agenda but cannot edit `agenda.json` in this repository.
+Only the repository owner or a GitHub collaborator with write permission can save directly to this repository. The app checks the token's repository write permission before it creates a commit. Other people can read the agenda but cannot edit `agenda.json` in this repository.
 
 Every successful save is a normal GitHub commit, so do not put private or sensitive information in the agenda.
 
 ## One-time GitHub sync setup
 
-The app uses a GitHub App Device Flow. It never asks for or stores your GitHub password. The access token is kept only in the current browser session and may need to be renewed on another device or after it expires.
+Because this is a static GitHub Pages site, it uses a fine-grained personal access token instead of a browser-based GitHub login. The app never receives your GitHub password. The token is masked and kept only in the current browser tab.
 
-1. In GitHub, open **Settings → Developer settings → GitHub Apps → New GitHub App**.
-2. Give it a name such as **My Agenda Sync** and use `https://cha0s-mnk.github.io/My-Agenda/` as the Homepage URL.
-3. Enable **Device Flow**.
-4. Under **Repository permissions**, set **Contents** to **Read and write**. Leave **Metadata** at its required read-only setting.
-5. Install the app on **My-Agenda only**.
-6. Copy the app's public **Client ID**. Do not use the App ID, client secret, or an access token.
-7. Open the agenda site, expand **One-time GitHub sync setup**, paste the Client ID, and select **Save client ID**.
-8. Select **Log in with GitHub**, open the displayed device link, and enter the displayed code.
+1. Open GitHub's [new fine-grained token page](https://github.com/settings/personal-access-tokens/new).
+2. Give the token a name such as **My Agenda Save** and choose an expiry date.
+3. Under **Repository access**, choose **Only select repositories**, then select **My-Agenda**.
+4. Under **Repository permissions**, set **Contents** to **Read and write**. Leave other permissions at their defaults.
+5. Generate the token and copy it immediately. GitHub will not show the complete token again.
+6. Open the agenda site, expand **One-time GitHub sync setup**, paste the token, and select **Connect token**.
+7. Select **Save to GitHub** to create a public commit in `agenda.json`.
 
-After that, **Save to GitHub** checks write permission and commits the current agenda to `agenda.json`. **Refresh from GitHub** replaces the current browser copy with the latest public version.
+Use a separate token on each device or browser tab. The token expires according to the expiry date chosen on GitHub. The previous GitHub App and Device Flow setup is not required.
+
+For more information, see GitHub's documentation on [fine-grained personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens).
 
 ## GitHub Pages
 
