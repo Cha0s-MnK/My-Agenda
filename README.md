@@ -13,11 +13,11 @@ It organises tasks into:
 
 - Add, edit, delete, and complete tasks.
 - Move a task to another quadrant while editing.
-- Generate a copyable prompt for ChatGPT to polish the complete agenda in concise British English.
+- Generate one copyable prompt for ChatGPT to polish the complete agenda in concise British English.
 - Load the public `agenda.json` automatically when the app opens.
 - Save the current agenda to GitHub with one click, creating a public commit.
 - Keep a local browser copy for fast editing and offline fallback.
-- Export and import the agenda as JSON.
+- Import an agenda from JSON.
 
 ## Public-data model
 
