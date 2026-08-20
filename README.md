@@ -27,6 +27,18 @@ Only the repository owner or a GitHub collaborator with write permission can sav
 
 Every successful save is a normal GitHub commit, so do not put private or sensitive information in the agenda.
 
+## Current sync pipeline
+
+The app uses GitHub as the shared source of truth:
+
+1. When the page opens, it loads the latest public `agenda.json` from the `main` branch.
+2. Adding, editing, completing, deleting, importing, or refreshing tasks updates the current browser copy first.
+3. **Save to GitHub** checks the connected token and confirms that it has write permission for `My-Agenda`.
+4. The app reads the current file version, then updates `agenda.json` through GitHub's Contents API, creating a new public commit.
+5. Another device can load that commit automatically or use **Refresh from GitHub**.
+
+The app does not use a webhook, GitHub App, Device Flow, client ID, or client secret. GitHub's REST API is used only for the authenticated save and permission check; public agenda loading does not require authentication.
+
 ## One-time GitHub sync setup
 
 Because this is a static GitHub Pages site, it uses a fine-grained personal access token instead of a browser-based GitHub login. The app never receives your GitHub password. The token is masked and kept only in the current browser tab.
