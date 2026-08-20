@@ -51,6 +51,8 @@ Because this is a static GitHub Pages site, it uses a fine-grained personal acce
 6. Open the agenda site, expand **One-time GitHub sync setup**, paste the token, and select **Connect token**.
 7. Select **Save to GitHub** to create a public commit in `agenda.json`.
 
+> **Important:** GitHub displays the complete token only once. If you leave the token-creation page before copying it, the token cannot be recovered; generate a new token instead. Never put the token in this repository or send it in a message.
+
 Use a separate token on each device or browser tab. The token expires according to the expiry date chosen on GitHub. The previous GitHub App and Device Flow setup is not required.
 
 For more information, see GitHub's documentation on [fine-grained personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens).
