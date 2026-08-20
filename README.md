@@ -39,8 +39,6 @@ The app uses GitHub as the shared source of truth:
 
 Currently, only **Add task** and an item's **Save** button trigger an automatic commit. Completing, deleting, importing, or rearranging tasks changes the browser copy first and will be included by the next automatic commit.
 
-Clicking **Cha0s_MnK** in the page title rechecks a token already stored in the current browser tab. The public source contains no GitHub token.
-
 The app does not use a webhook, GitHub App, Device Flow, client ID, or client secret. GitHub's REST API is used only for the authenticated save and permission check; public agenda loading does not require authentication.
 
 ## One-time GitHub sync setup
