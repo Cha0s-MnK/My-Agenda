@@ -1,26 +1,8 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-20T00:00:00.000Z",
+  "updatedAt": "2026-08-20T06:04:09.079Z",
   "tasks": [
-    {
-      "id": "pack-vietnam",
-      "text": "Pack for Vietnam.",
-      "category": "urgent-important",
-      "complete": false
-    },
-    {
-      "id": "pack-modest-2026",
-      "text": "Pack 1+6+1 pieces of clothing, 1+3 pairs of trousers, and 1+6 pieces of underwear and socks for MODEST 2026 in Vietnam.",
-      "category": "urgent-important",
-      "complete": false
-    },
-    {
-      "id": "send-approval-jiaqi-liu",
-      "text": "Send the approval document to Jiaqi Liu.",
-      "category": "urgent-not-important",
-      "complete": false
-    },
     {
       "id": "revise-high-z-smbh-seeds",
       "text": "Revise the High-z SMBH Seeds paper.",
