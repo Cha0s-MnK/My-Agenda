@@ -65,25 +65,6 @@
       margin: 0;
     }
 
-    .owner-shortcut {
-      appearance: none;
-      background: transparent;
-      border: 0;
-      color: inherit;
-      font: inherit;
-      letter-spacing: inherit;
-      line-height: inherit;
-      padding: 0;
-    }
-
-    .owner-shortcut:hover { color: var(--primary); }
-
-    .owner-shortcut:focus-visible {
-      border-radius: 4px;
-      outline: 3px solid rgba(52, 81, 178, 0.25);
-      outline-offset: 4px;
-    }
-
     .hero-description {
       color: var(--muted);
       margin: 0.65rem 0 0;
@@ -426,7 +407,7 @@
     <header class="hero">
       <div>
         <p class="eyebrow">Personal task manager</p>
-        <h1>My Agenda (<button class="owner-shortcut" id="owner-shortcut" type="button" aria-label="Verify the stored GitHub connection" title="Verify the stored GitHub connection">Cha0s_MnK</button>)</h1>
+        <h1>My Agenda (Cha0s_MnK)</h1>
         <p class="hero-description">Organise tasks by urgency and importance, then keep the next action clear.</p>
       </div>
       <span class="storage-badge">Public GitHub agenda</span>
@@ -484,19 +465,6 @@
       </details>
     </section>
 
-    <section class="card prompt-panel" id="prompt-panel" hidden aria-labelledby="prompt-heading">
-      <div class="prompt-heading">
-        <h2 id="prompt-heading">Prompt ready</h2>
-        <span class="prompt-help">Copy this prompt and paste it into this ChatGPT conversation.</span>
-      </div>
-      <label class="prompt-label" for="agenda-prompt-text">Prompt to send to ChatGPT</label>
-      <textarea id="agenda-prompt-text" rows="12" readonly></textarea>
-      <div class="prompt-actions">
-        <button class="button button-primary" id="copy-prompt-button" type="button">Copy prompt</button>
-        <button class="button button-secondary" id="close-prompt-button" type="button">Close</button>
-      </div>
-    </section>
-
     <div class="quadrants" aria-live="polite">
       <section class="quadrant" data-quadrant="urgent-important" aria-labelledby="heading-urgent-important">
         <header class="quadrant-header">
@@ -530,6 +498,19 @@
         <ul class="task-list" data-task-list></ul>
       </section>
     </div>
+
+    <section class="card prompt-panel" id="prompt-panel" hidden aria-labelledby="prompt-heading">
+      <div class="prompt-heading">
+        <h2 id="prompt-heading">Prompt ready</h2>
+        <span class="prompt-help">Copy this prompt and paste it into this ChatGPT conversation.</span>
+      </div>
+      <label class="prompt-label" for="agenda-prompt-text">Prompt to send to ChatGPT</label>
+      <textarea id="agenda-prompt-text" rows="12" readonly></textarea>
+      <div class="prompt-actions">
+        <button class="button button-primary" id="copy-prompt-button" type="button">Copy prompt</button>
+        <button class="button button-secondary" id="close-prompt-button" type="button">Close</button>
+      </div>
+    </section>
 
     <p class="footer-note" id="agenda-status" aria-live="polite">Unfinished tasks are shown with an unchecked box.</p>
     <footer><p class="footer-note">My Agenda is public: anyone can read the agenda and its commit history. Saving requires a GitHub account with write permission to this repository.</p></footer>
@@ -568,7 +549,6 @@
       var githubSetup = document.querySelector(".github-setup");
       var refreshGithubButton = document.getElementById("refresh-github-button");
       var connectGithubButton = document.getElementById("github-connect-button");
-      var ownerShortcut = document.getElementById("owner-shortcut");
       var promptPanel = document.getElementById("prompt-panel");
       var promptInput = document.getElementById("agenda-prompt-text");
       var editingId = null;
@@ -1116,16 +1096,6 @@
           connectGitHubToken();
         } else {
           setSyncStatus("Paste a fine-grained GitHub token in the setup section first.");
-          githubTokenInput.focus();
-        }
-      });
-
-      ownerShortcut.addEventListener("click", function () {
-        if (githubToken) {
-          connectGitHubToken(false);
-        } else {
-          githubSetup.open = true;
-          setSyncStatus("No GitHub token is stored in this browser tab. Connect one in the setup section first.");
           githubTokenInput.focus();
         }
       });
