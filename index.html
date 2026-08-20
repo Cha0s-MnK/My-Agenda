@@ -435,11 +435,10 @@
 
     <section class="card utility-bar" aria-label="Agenda data tools">
       <div class="utility-copy">
-        <p class="utility-note">The shared agenda is public and stored in this repository. Local changes are saved here first.</p>
+        <p class="utility-note">The shared agenda is public and stored in this repository. Additions and item edits are committed automatically when a token is connected.</p>
         <p class="sync-status" id="sync-status" aria-live="polite">Loading the shared agenda from GitHub...</p>
       </div>
       <div class="utility-actions">
-        <button class="button button-primary" id="save-github-button" type="button">Save to GitHub</button>
         <button class="button button-secondary" id="refresh-github-button" type="button">Refresh from GitHub</button>
         <button class="button button-secondary" id="github-connect-button" type="button">Connect GitHub token</button>
         <button class="button button-secondary" id="polish-agenda-button" type="button">Polish agenda</button>
@@ -548,7 +547,6 @@
       var saveTokenButton = document.getElementById("save-token-button");
       var clearTokenButton = document.getElementById("clear-token-button");
       var githubSetup = document.querySelector(".github-setup");
-      var saveGithubButton = document.getElementById("save-github-button");
       var refreshGithubButton = document.getElementById("refresh-github-button");
       var connectGithubButton = document.getElementById("github-connect-button");
       var promptPanel = document.getElementById("prompt-panel");
@@ -556,6 +554,8 @@
       var editingId = null;
       var githubToken = readSessionStorage(githubTokenStorageKey);
       var authInProgress = false;
+      var autoCommitInProgress = false;
+      var autoCommitQueued = false;
       var tasks = loadTasks();
 
       function isValidCategory(value) {
@@ -594,7 +594,7 @@
         try {
           window.localStorage.setItem(storageKey, JSON.stringify(tasks));
           if (!options || !options.silent) {
-            setSyncStatus("Local changes saved. Click Save to GitHub to create a public commit.");
+            setSyncStatus("Local changes saved in this browser. Add a task or save an edited item to commit the agenda automatically.");
           }
         } catch (error) {
           status.textContent = "This browser could not save the latest change.";
@@ -788,7 +788,6 @@
       }
 
       async function saveToGitHub() {
-        saveGithubButton.disabled = true;
         refreshGithubButton.disabled = true;
         setSyncStatus("Checking GitHub write permission...");
         try {
@@ -829,9 +828,28 @@
           }
           setStatus("The agenda was not saved to GitHub.");
         } finally {
-          saveGithubButton.disabled = false;
           refreshGithubButton.disabled = false;
         }
+      }
+
+      function requestAutoCommit() {
+        if (!githubToken) {
+          githubSetup.open = true;
+          setSyncStatus("Local change saved. Connect a GitHub token to commit it automatically.");
+          return;
+        }
+        if (autoCommitInProgress) {
+          autoCommitQueued = true;
+          return;
+        }
+        autoCommitInProgress = true;
+        saveToGitHub().finally(function () {
+          autoCommitInProgress = false;
+          if (autoCommitQueued) {
+            autoCommitQueued = false;
+            requestAutoCommit();
+          }
+        });
       }
 
       function addCategoryOptions(select, selectedValue) {
@@ -959,6 +977,7 @@
                 saveTasks();
                 render();
                 setStatus("Task updated.");
+                requestAutoCommit();
               });
 
               item.appendChild(editForm);
@@ -1030,6 +1049,7 @@
         taskInput.value = "";
         taskInput.focus();
         setStatus("Task added as unfinished.");
+        requestAutoCommit();
       });
 
       document.getElementById("copy-prompt-button").addEventListener("click", function () {
@@ -1081,7 +1101,6 @@
       });
 
       refreshGithubButton.addEventListener("click", loadRemoteAgenda);
-      saveGithubButton.addEventListener("click", saveToGitHub);
 
       document.getElementById("import-button").addEventListener("click", function () {
         document.getElementById("import-file").click();
