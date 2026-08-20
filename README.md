@@ -11,7 +11,7 @@ It organises tasks into:
 
 ## Features
 
-- Add, edit, delete, and complete tasks.
+- Add, edit, and complete tasks; clear all completed tasks with one general action.
 - Move a task to another quadrant while editing.
 - Generate one copyable prompt for ChatGPT to polish the complete agenda in concise British English.
 - Load the public `agenda.json` automatically when the app opens.
@@ -32,12 +32,12 @@ Every successful save is a normal GitHub commit, so do not put private or sensit
 The app uses GitHub as the shared source of truth:
 
 1. When the page opens, it loads the latest public `agenda.json` from the `main` branch.
-2. Adding, editing, completing, deleting, importing, or refreshing tasks updates the current browser copy first.
-3. After **Add task** or an item **Save**, the app checks the connected token and confirms that it has write permission for `My-Agenda`.
+2. Adding, editing, completing, clearing completed tasks, importing, or refreshing tasks updates the current browser copy first.
+3. After **Add task**, an item **Save**, or **Clear completed tasks**, the app checks the connected token and confirms that it has write permission for `My-Agenda`.
 4. The app reads the current file version, then updates `agenda.json` through GitHub's Contents API, creating a new public commit.
 5. Another device can load that commit automatically or use **Refresh from GitHub**.
 
-Currently, only **Add task** and an item's **Save** button trigger an automatic commit. Completing, deleting, importing, or rearranging tasks changes the browser copy first and will be included by the next automatic commit.
+Currently, **Add task**, an item's **Save** button, and **Clear completed tasks** trigger an automatic commit. Marking tasks complete or unfinished, importing, or rearranging tasks changes the browser copy first and will be included by the next automatic commit.
 
 The app does not use a webhook, GitHub App, Device Flow, client ID, or client secret. GitHub's REST API is used only for the authenticated save and permission check; public agenda loading does not require authentication.
 
