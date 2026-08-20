@@ -1,6 +1,8 @@
 # My Agenda
 
-My Agenda is a public, static four-quadrant agenda app. It organises tasks into:
+My Agenda is a public, static four-quadrant agenda app. The shared agenda lives in [`agenda.json`](./agenda.json), so every device can load the same data from this repository.
+
+It organises tasks into:
 
 - Urgent and important
 - Urgent but not important
@@ -12,11 +14,33 @@ My Agenda is a public, static four-quadrant agenda app. It organises tasks into:
 - Add, edit, delete, and complete tasks.
 - Move a task to another quadrant while editing.
 - Generate a copyable prompt for ChatGPT to polish the complete agenda in concise British English.
-- Store tasks locally in the browser under `agenda-four-quadrants-v2`.
-- Export and import the agenda as JSON for manual transfer between devices.
-- Use the app without an API key or server.
+- Load the public `agenda.json` automatically when the app opens.
+- Save the current agenda to GitHub with one click, creating a public commit.
+- Keep a local browser copy for fast editing and offline fallback.
+- Export and import the agenda as JSON.
 
-The repository intentionally contains no personal agenda tasks. Task data is stored in the browser and is not committed to this public repository.
+## Public-data model
+
+This repository is public. Anyone can read the agenda, its task text, and its complete commit history. Anyone may also copy or fork the repository.
+
+Only the repository owner or a GitHub collaborator with write permission can save directly to this repository. A normal GitHub login is not enough by itself: the app checks the account's repository write permission before it creates a commit. Other people can read the agenda but cannot edit `agenda.json` in this repository.
+
+Every successful save is a normal GitHub commit, so do not put private or sensitive information in the agenda.
+
+## One-time GitHub sync setup
+
+The app uses a GitHub App Device Flow. It never asks for or stores your GitHub password. The access token is kept only in the current browser session and may need to be renewed on another device or after it expires.
+
+1. In GitHub, open **Settings → Developer settings → GitHub Apps → New GitHub App**.
+2. Give it a name such as **My Agenda Sync** and use `https://cha0s-mnk.github.io/My-Agenda/` as the Homepage URL.
+3. Enable **Device Flow**.
+4. Under **Repository permissions**, set **Contents** to **Read and write**. Leave **Metadata** at its required read-only setting.
+5. Install the app on **My-Agenda only**.
+6. Copy the app's public **Client ID**. Do not use the App ID, client secret, or an access token.
+7. Open the agenda site, expand **One-time GitHub sync setup**, paste the Client ID, and select **Save client ID**.
+8. Select **Log in with GitHub**, open the displayed device link, and enter the displayed code.
+
+After that, **Save to GitHub** checks write permission and commits the current agenda to `agenda.json`. **Refresh from GitHub** replaces the current browser copy with the latest public version.
 
 ## GitHub Pages
 
@@ -31,5 +55,3 @@ To publish the app:
 The site will be available at:
 
 `https://cha0s-mnk.github.io/My-Agenda/`
-
-Automatic cloud synchronisation is a later phase. Until then, use **Export agenda** on one device and **Import agenda** on another.
