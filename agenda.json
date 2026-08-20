@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-20T08:38:15.984Z",
+  "updatedAt": "2026-08-20T08:38:25.915Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -24,6 +24,12 @@
     {
       "id": "task-1787215095456-138f04e9bfacc",
       "text": "Watch 电锯人：蕾塞篇",
+      "category": "not-important-not-urgent",
+      "complete": false
+    },
+    {
+      "id": "task-1787215104372-16e38d77accfa8",
+      "text": "Watch 奥德赛",
       "category": "not-important-not-urgent",
       "complete": false
     }
