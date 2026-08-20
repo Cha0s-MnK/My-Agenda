@@ -1,3 +1,4 @@
+JavaScript syntax OK
 <!doctype html>
 <html lang="en-GB">
 <head>
@@ -570,6 +571,7 @@
       var githubDeviceInstructions = document.getElementById("github-device-instructions");
       var githubDeviceCode = document.getElementById("github-device-code");
       var githubDeviceLink = document.getElementById("github-device-link");
+      var githubSetup = document.querySelector(".github-setup");
       var saveGithubButton = document.getElementById("save-github-button");
       var refreshGithubButton = document.getElementById("refresh-github-button");
       var loginGithubButton = document.getElementById("github-login-button");
@@ -854,6 +856,7 @@
           var verificationUri = device.verification_uri_complete || device.verification_uri || "https://github.com/login/device";
           githubDeviceLink.href = verificationUri;
           githubDeviceCode.textContent = device.user_code || "";
+          githubSetup.open = true;
           githubDeviceInstructions.hidden = false;
           githubUserStatus.textContent = "Waiting for GitHub authorisation...";
           var tokenResponse = await pollForGitHubToken(device);
