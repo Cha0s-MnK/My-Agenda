@@ -1,3 +1,4 @@
+JavaScript syntax OK
 <!doctype html>
 <html lang="en-GB">
 <head>
@@ -691,7 +692,11 @@
       }
 
       async function ensureGitHubWriteAccess() {
-        if (!githubToken) throw new Error("Connect a fine-grained GitHub token first.");
+        if (!githubToken) {
+          githubSetup.open = true;
+          githubTokenInput.focus();
+          throw new Error("Connect a fine-grained GitHub token first.");
+        }
 
         var repo = await githubRequest("/repos/" + repository.owner + "/" + repository.name, githubToken);
         if (!repo.permissions || !repo.permissions.push) {
