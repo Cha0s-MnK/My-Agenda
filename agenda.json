@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-20T06:40:41.897Z",
+  "updatedAt": "2026-08-20T08:38:15.984Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -19,6 +19,12 @@
       "id": "task-1787206953408-98c895bf182208",
       "text": "Port Arepo-CD to Arepo-2.",
       "category": "important-not-urgent",
+      "complete": false
+    },
+    {
+      "id": "task-1787215095456-138f04e9bfacc",
+      "text": "Watch 电锯人：蕾塞篇",
+      "category": "not-important-not-urgent",
       "complete": false
     }
   ]
