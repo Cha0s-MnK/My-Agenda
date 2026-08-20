@@ -443,6 +443,7 @@
         <button class="button button-secondary" id="github-connect-button" type="button">Connect GitHub token</button>
         <button class="button button-secondary" id="polish-agenda-button" type="button">Polish agenda</button>
         <button class="button button-secondary" id="import-button" type="button">Import agenda</button>
+        <button class="button button-danger" id="clear-completed-button" type="button">Clear completed tasks</button>
         <input id="import-file" type="file" accept="application/json,.json" hidden>
       </div>
       <details class="github-setup">
@@ -549,6 +550,7 @@
       var githubSetup = document.querySelector(".github-setup");
       var refreshGithubButton = document.getElementById("refresh-github-button");
       var connectGithubButton = document.getElementById("github-connect-button");
+      var clearCompletedButton = document.getElementById("clear-completed-button");
       var promptPanel = document.getElementById("prompt-panel");
       var promptInput = document.getElementById("agenda-prompt-text");
       var editingId = null;
@@ -1015,13 +1017,6 @@
               render();
               setStatus("Editing task.");
             }, "Edit task: " + task.text));
-            taskActions.appendChild(createButton("Delete", "button-danger", function () {
-              tasks = tasks.filter(function (candidate) { return candidate.id !== task.id; });
-              saveTasks();
-              render();
-              setStatus("Task deleted.");
-            }, "Delete task: " + task.text));
-
             line.appendChild(check);
             line.appendChild(taskActions);
 
@@ -1079,6 +1074,22 @@
         promptInput.focus();
         promptInput.select();
         setStatus("Agenda-wide polishing prompt ready. Copy it and paste it into this ChatGPT conversation.");
+      });
+
+      clearCompletedButton.addEventListener("click", function () {
+        var completedCount = tasks.filter(function (task) { return task.complete; }).length;
+        if (!completedCount) {
+          setStatus("There are no completed tasks to clear.");
+          return;
+        }
+        if (!window.confirm("Clear " + completedCount + " completed task" + (completedCount === 1 ? "" : "s") + "? This cannot be undone.")) {
+          return;
+        }
+        tasks = tasks.filter(function (task) { return !task.complete; });
+        saveTasks();
+        render();
+        setStatus("Cleared " + completedCount + " completed task" + (completedCount === 1 ? "" : "s") + ".");
+        requestAutoCommit();
       });
 
       saveTokenButton.addEventListener("click", function () {
