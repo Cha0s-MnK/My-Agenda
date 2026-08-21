@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-20T08:38:25.915Z",
+  "updatedAt": "2026-08-21T07:42:17.208Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -30,6 +30,12 @@
     {
       "id": "task-1787215104372-16e38d77accfa8",
       "text": "Watch 奥德赛",
+      "category": "not-important-not-urgent",
+      "complete": false
+    },
+    {
+      "id": "task-1787298134840-0421b450331b78",
+      "text": "Register 1 talk and 1 poster at the same time",
       "category": "not-important-not-urgent",
       "complete": false
     }
