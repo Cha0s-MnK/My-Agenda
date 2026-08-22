@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-21T07:42:17.208Z",
+  "updatedAt": "2026-08-22T09:56:50.612Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -37,6 +37,12 @@
       "id": "task-1787298134840-0421b450331b78",
       "text": "Register 1 talk and 1 poster at the same time",
       "category": "not-important-not-urgent",
+      "complete": false
+    },
+    {
+      "id": "task-1787392607002-686244302aa158",
+      "text": "Correctness of the model's extension beyong MW and M31",
+      "category": "important-not-urgent",
       "complete": false
     }
   ]
