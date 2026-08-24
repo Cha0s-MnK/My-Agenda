@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-24T05:27:31.213Z",
+  "updatedAt": "2026-08-24T14:42:43.424Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -55,7 +55,7 @@
       "id": "task-1787478159569-17215b11889b68",
       "text": "注册",
       "category": "urgent-important",
-      "complete": false
+      "complete": true
     },
     {
       "id": "task-1787549234529-fcc5e6c1933d3",
@@ -67,6 +67,12 @@
       "id": "task-1787549250797-1f9f7fabe103",
       "text": "工位上的柜子",
       "category": "not-important-not-urgent",
+      "complete": false
+    },
+    {
+      "id": "task-1787582560708-0853f4330c5a4",
+      "text": "Email coauthors",
+      "category": "urgent-important",
       "complete": false
     }
   ]
