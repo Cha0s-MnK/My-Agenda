@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-24T14:42:43.424Z",
+  "updatedAt": "2026-08-24T14:42:53.739Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -50,12 +50,6 @@
       "text": "运动拖鞋",
       "category": "not-important-not-urgent",
       "complete": false
-    },
-    {
-      "id": "task-1787478159569-17215b11889b68",
-      "text": "注册",
-      "category": "urgent-important",
-      "complete": true
     },
     {
       "id": "task-1787549234529-fcc5e6c1933d3",
