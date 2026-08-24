@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-24T05:27:17.131Z",
+  "updatedAt": "2026-08-24T05:27:31.213Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -60,6 +60,12 @@
     {
       "id": "task-1787549234529-fcc5e6c1933d3",
       "text": "Genshin impact freshman guide",
+      "category": "not-important-not-urgent",
+      "complete": false
+    },
+    {
+      "id": "task-1787549250797-1f9f7fabe103",
+      "text": "工位上的柜子",
       "category": "not-important-not-urgent",
       "complete": false
     }
