@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-25T09:36:27.482Z",
+  "updatedAt": "2026-08-25T13:50:10.304Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -73,6 +73,12 @@
       "id": "task-1787650584831-65aa96e94cfcf",
       "text": "rewrite SDAR",
       "category": "important-not-urgent",
+      "complete": false
+    },
+    {
+      "id": "task-1787665809537-b82364f35b9028",
+      "text": "lower cluster mass limit",
+      "category": "urgent-important",
       "complete": false
     }
   ]
