@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-25T13:50:10.304Z",
+  "updatedAt": "2026-08-25T13:50:22.571Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -78,6 +78,12 @@
     {
       "id": "task-1787665809537-b82364f35b9028",
       "text": "lower cluster mass limit",
+      "category": "urgent-important",
+      "complete": false
+    },
+    {
+      "id": "task-1787665822119-eba26a516130c",
+      "text": "find existing agenda and ref website/tool",
       "category": "urgent-important",
       "complete": false
     }
