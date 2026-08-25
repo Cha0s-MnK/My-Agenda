@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-25T07:05:50.456Z",
+  "updatedAt": "2026-08-25T09:36:27.482Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -67,6 +67,12 @@
       "id": "task-1787641548727-eb2cde052ec1e8",
       "text": "Check Mark Gieles's paper abnout very massive stars",
       "category": "not-important-not-urgent",
+      "complete": false
+    },
+    {
+      "id": "task-1787650584831-65aa96e94cfcf",
+      "text": "rewrite SDAR",
+      "category": "important-not-urgent",
       "complete": false
     }
   ]
