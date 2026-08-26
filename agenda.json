@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-26T07:54:32.031Z",
+  "updatedAt": "2026-08-26T07:55:00.250Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -101,7 +101,7 @@
     },
     {
       "id": "task-1787728644349-2394f0f863c4d",
-      "text": "整理 refs",
+      "text": "Organise the references.",
       "category": "important-not-urgent",
       "complete": false
     }
