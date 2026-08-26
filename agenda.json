@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-26T07:55:29.709Z",
+  "updatedAt": "2026-08-26T07:55:37.102Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -95,7 +95,7 @@
     },
     {
       "id": "task-1787665861645-06b6eb6e6a5af",
-      "text": "gas-binary interaction in paper",
+      "text": "Address gas–binary interactions in the paper.",
       "category": "urgent-important",
       "complete": false
     },
