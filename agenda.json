@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-26T07:53:51.005Z",
+  "updatedAt": "2026-08-26T07:53:56.086Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -29,7 +29,7 @@
     },
     {
       "id": "task-1787215104372-16e38d77accfa8",
-      "text": "Watch 奥德赛",
+      "text": "Watch The Odyssey.",
       "category": "not-important-not-urgent",
       "complete": false
     },
