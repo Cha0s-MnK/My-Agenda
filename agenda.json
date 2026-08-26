@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-26T07:55:37.102Z",
+  "updatedAt": "2026-08-26T07:55:57.671Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -77,7 +77,7 @@
     },
     {
       "id": "task-1787665809537-b82364f35b9028",
-      "text": "lower cluster mass limit",
+      "text": "Test the lower cluster-mass limit.",
       "category": "urgent-important",
       "complete": true
     },
