@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-26T07:53:56.086Z",
+  "updatedAt": "2026-08-26T07:54:05.389Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -47,7 +47,7 @@
     },
     {
       "id": "task-1787478151846-0aaa11bbe15fc8",
-      "text": "运动拖鞋",
+      "text": "Get sports slippers.",
       "category": "not-important-not-urgent",
       "complete": false
     },
