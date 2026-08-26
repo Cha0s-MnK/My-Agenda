@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-26T08:51:37.060Z",
+  "updatedAt": "2026-08-26T11:48:44.268Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -90,6 +90,12 @@
     {
       "id": "task-1787734295431-e61d9bd3736438",
       "text": "Check Group_M_TopHat200 in TNG data dl.",
+      "category": "important-not-urgent",
+      "complete": false
+    },
+    {
+      "id": "task-1787744921505-dac2fc96ec16c8",
+      "text": "Check Omega_b",
       "category": "important-not-urgent",
       "complete": false
     }
