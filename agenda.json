@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-26T07:54:20.984Z",
+  "updatedAt": "2026-08-26T07:54:32.031Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -65,7 +65,7 @@
     },
     {
       "id": "task-1787641548727-eb2cde052ec1e8",
-      "text": "Check Mark Gieles's paper abnout very massive stars",
+      "text": "Check Mark Gieles's paper about very massive stars.",
       "category": "not-important-not-urgent",
       "complete": false
     },
