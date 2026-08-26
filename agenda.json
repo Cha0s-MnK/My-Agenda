@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-26T07:55:18.227Z",
+  "updatedAt": "2026-08-26T07:55:29.709Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -89,7 +89,7 @@
     },
     {
       "id": "task-1787665853802-db10c638e796c",
-      "text": "BHMF at different z",
+      "text": "Study BHMFs at different redshifts.",
       "category": "urgent-important",
       "complete": false
     },
