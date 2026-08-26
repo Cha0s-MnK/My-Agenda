@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-26T07:17:26.889Z",
+  "updatedAt": "2026-08-26T07:53:51.005Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -23,7 +23,7 @@
     },
     {
       "id": "task-1787215095456-138f04e9bfacc",
-      "text": "Watch 电锯人：蕾塞篇",
+      "text": "Watch Chainsaw Man: The Movie – Reze Arc.",
       "category": "not-important-not-urgent",
       "complete": false
     },
@@ -37,7 +37,7 @@
       "id": "task-1787298134840-0421b450331b78",
       "text": "Register 1 talk and 1 poster at the same time",
       "category": "not-important-not-urgent",
-      "complete": false
+      "complete": true
     },
     {
       "id": "task-1787392607002-686244302aa158",
@@ -73,7 +73,7 @@
       "id": "task-1787650584831-65aa96e94cfcf",
       "text": "rewrite SDAR",
       "category": "important-not-urgent",
-      "complete": false
+      "complete": true
     },
     {
       "id": "task-1787665809537-b82364f35b9028",
@@ -85,7 +85,7 @@
       "id": "task-1787665822119-eba26a516130c",
       "text": "find existing agenda and ref website/tool",
       "category": "urgent-important",
-      "complete": false
+      "complete": true
     },
     {
       "id": "task-1787665853802-db10c638e796c",
