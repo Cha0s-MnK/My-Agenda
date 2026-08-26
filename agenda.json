@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-26T07:54:05.389Z",
+  "updatedAt": "2026-08-26T07:54:13.475Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -53,7 +53,7 @@
     },
     {
       "id": "task-1787549234529-fcc5e6c1933d3",
-      "text": "Genshin impact freshman guide",
+      "text": "Make a Genshin Impact freshman guide.",
       "category": "not-important-not-urgent",
       "complete": false
     },
