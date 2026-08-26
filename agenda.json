@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-26T07:55:00.250Z",
+  "updatedAt": "2026-08-26T07:55:07.613Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -41,7 +41,7 @@
     },
     {
       "id": "task-1787392607002-686244302aa158",
-      "text": "Correctness of the model's extension beyong MW and M31",
+      "text": "Verify the correctness of extending the model beyond the MW and M31.",
       "category": "important-not-urgent",
       "complete": false
     },
