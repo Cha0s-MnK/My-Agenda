@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-26T07:54:13.475Z",
+  "updatedAt": "2026-08-26T07:54:20.984Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -59,7 +59,7 @@
     },
     {
       "id": "task-1787549250797-1f9f7fabe103",
-      "text": "工位上的柜子",
+      "text": "Get a cabinet for the workstation.",
       "category": "not-important-not-urgent",
       "complete": false
     },
