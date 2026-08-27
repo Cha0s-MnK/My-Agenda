@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-26T11:48:44.268Z",
+  "updatedAt": "2026-08-27T05:56:50.381Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -97,6 +97,12 @@
       "id": "task-1787744921505-dac2fc96ec16c8",
       "text": "Check Omega_b",
       "category": "important-not-urgent",
+      "complete": false
+    },
+    {
+      "id": "task-1787810206541-8919779cf519c8",
+      "text": "取耳塞",
+      "category": "urgent-important",
       "complete": false
     }
   ]
