@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-27T08:40:33.860Z",
+  "updatedAt": "2026-08-27T08:44:16.413Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -115,6 +115,12 @@
       "id": "task-1787820030850-6ac48a4cb8d5f8",
       "text": "metal-dependent stellar evo",
       "category": "important-not-urgent",
+      "complete": false
+    },
+    {
+      "id": "task-1787820254181-0f3ed1f09c36c8",
+      "text": "zhuoyou with wmr",
+      "category": "not-important-not-urgent",
       "complete": false
     }
   ]
