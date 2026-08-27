@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-27T05:56:50.381Z",
+  "updatedAt": "2026-08-27T05:56:59.064Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -103,6 +103,12 @@
       "id": "task-1787810206541-8919779cf519c8",
       "text": "取耳塞",
       "category": "urgent-important",
+      "complete": false
+    },
+    {
+      "id": "task-1787810218645-52b3d7a7bfb3a",
+      "text": "update my CV",
+      "category": "important-not-urgent",
       "complete": false
     }
   ]
