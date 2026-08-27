@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-27T05:56:59.064Z",
+  "updatedAt": "2026-08-27T08:40:33.860Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -73,13 +73,13 @@
       "id": "task-1787665853802-db10c638e796c",
       "text": "Study BHMFs at different redshifts.",
       "category": "urgent-important",
-      "complete": false
+      "complete": true
     },
     {
       "id": "task-1787665861645-06b6eb6e6a5af",
       "text": "Address gas–binary interactions in the paper.",
       "category": "urgent-important",
-      "complete": false
+      "complete": true
     },
     {
       "id": "task-1787728644349-2394f0f863c4d",
@@ -108,6 +108,12 @@
     {
       "id": "task-1787810218645-52b3d7a7bfb3a",
       "text": "update my CV",
+      "category": "important-not-urgent",
+      "complete": false
+    },
+    {
+      "id": "task-1787820030850-6ac48a4cb8d5f8",
+      "text": "metal-dependent stellar evo",
       "category": "important-not-urgent",
       "complete": false
     }
