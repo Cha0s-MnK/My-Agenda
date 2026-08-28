@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-28T16:40:51.715Z",
+  "updatedAt": "2026-08-28T16:40:56.231Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -64,24 +64,6 @@
       "complete": false
     },
     {
-      "id": "task-1787665809537-b82364f35b9028",
-      "text": "Test the lower cluster-mass limit.",
-      "category": "urgent-important",
-      "complete": true
-    },
-    {
-      "id": "task-1787665853802-db10c638e796c",
-      "text": "Study BHMFs at different redshifts.",
-      "category": "urgent-important",
-      "complete": true
-    },
-    {
-      "id": "task-1787665861645-06b6eb6e6a5af",
-      "text": "Address gas–binary interactions in the paper.",
-      "category": "urgent-important",
-      "complete": true
-    },
-    {
       "id": "task-1787728644349-2394f0f863c4d",
       "text": "Organise the references.",
       "category": "important-not-urgent",
@@ -98,12 +80,6 @@
       "text": "Check Omega_b",
       "category": "important-not-urgent",
       "complete": false
-    },
-    {
-      "id": "task-1787810206541-8919779cf519c8",
-      "text": "取耳塞",
-      "category": "urgent-important",
-      "complete": true
     },
     {
       "id": "task-1787810218645-52b3d7a7bfb3a",
