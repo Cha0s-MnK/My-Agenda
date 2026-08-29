@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-28T16:40:56.231Z",
+  "updatedAt": "2026-08-29T14:31:22.248Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -97,12 +97,6 @@
       "id": "task-1787820254181-0f3ed1f09c36c8",
       "text": "zhuoyou with wmr",
       "category": "not-important-not-urgent",
-      "complete": false
-    },
-    {
-      "id": "task-1787935248589-ff222d775231f",
-      "text": "Test the Vergasa complicated model",
-      "category": "urgent-important",
       "complete": false
     }
   ]
