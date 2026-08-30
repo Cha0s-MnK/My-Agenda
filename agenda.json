@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-08-30T15:29:43.716Z",
+  "updatedAt": "2026-08-30T15:30:39.005Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -108,6 +108,12 @@
     {
       "id": "task-1788103780882-064256ee685da8",
       "text": "Fix the plot error",
+      "category": "urgent-important",
+      "complete": false
+    },
+    {
+      "id": "task-1788103838429-dcf7347d2128c",
+      "text": "Cite meeting's friends' papers",
       "category": "urgent-important",
       "complete": false
     }
