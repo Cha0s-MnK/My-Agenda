@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-09-01T08:34:41.706Z",
+  "updatedAt": "2026-09-02T08:38:18.967Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -108,6 +108,12 @@
     {
       "id": "task-1788251663222-1930e43a72cb3",
       "text": "extra scatter in metal for GCs",
+      "category": "important-not-urgent",
+      "complete": false
+    },
+    {
+      "id": "task-1788338295823-2296773aaa0d9",
+      "text": "check whether the tidal-disruption criterion also expects an enclosed mean density or a local density",
       "category": "important-not-urgent",
       "complete": false
     }
