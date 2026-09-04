@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-09-04T06:38:24.167Z",
+  "updatedAt": "2026-09-04T09:12:03.765Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -103,12 +103,6 @@
       "id": "task-1788103838429-dcf7347d2128c",
       "text": "Cite meeting's friends' papers",
       "category": "urgent-important",
-      "complete": false
-    },
-    {
-      "id": "task-1788251663222-1930e43a72cb3",
-      "text": "extra scatter in metal for GCs",
-      "category": "important-not-urgent",
       "complete": false
     },
     {
