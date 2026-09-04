@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-09-02T08:38:18.967Z",
+  "updatedAt": "2026-09-04T06:38:24.167Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -36,7 +36,7 @@
     {
       "id": "task-1787392607002-686244302aa158",
       "text": "Verify the correctness of extending the model beyond the MW and M31.",
-      "category": "important-not-urgent",
+      "category": "urgent-not-important",
       "complete": false
     },
     {
@@ -114,6 +114,12 @@
     {
       "id": "task-1788338295823-2296773aaa0d9",
       "text": "check whether the tidal-disruption criterion also expects an enclosed mean density or a local density",
+      "category": "important-not-urgent",
+      "complete": false
+    },
+    {
+      "id": "task-1788503901164-352679b685bc5",
+      "text": "A bash file for auto update?",
       "category": "important-not-urgent",
       "complete": false
     }
