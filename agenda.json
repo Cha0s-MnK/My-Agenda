@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-09-23T12:56:54.726Z",
+  "updatedAt": "2026-09-23T12:57:08.605Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -104,12 +104,6 @@
       "text": "check whether the tidal-disruption criterion also expects an enclosed mean density or a local density",
       "category": "important-not-urgent",
       "complete": false
-    },
-    {
-      "id": "task-1788600728037-eaa8a94ff05f4",
-      "text": "update 培养计划",
-      "category": "urgent-important",
-      "complete": true
     },
     {
       "id": "task-1789627557826-fc31d138090af",
