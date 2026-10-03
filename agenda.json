@@ -1,7 +1,7 @@
 {
   "format": "my-agenda-json",
   "version": 1,
-  "updatedAt": "2026-09-23T12:57:08.605Z",
+  "updatedAt": "2026-10-03T07:04:19.372Z",
   "tasks": [
     {
       "id": "revise-high-z-smbh-seeds",
@@ -24,12 +24,6 @@
     {
       "id": "task-1787215095456-138f04e9bfacc",
       "text": "Watch Chainsaw Man: The Movie – Reze Arc.",
-      "category": "not-important-not-urgent",
-      "complete": false
-    },
-    {
-      "id": "task-1787215104372-16e38d77accfa8",
-      "text": "Watch The Odyssey.",
       "category": "not-important-not-urgent",
       "complete": false
     },
@@ -94,12 +88,6 @@
       "complete": false
     },
     {
-      "id": "task-1787820254181-0f3ed1f09c36c8",
-      "text": "zhuoyou with wmr",
-      "category": "not-important-not-urgent",
-      "complete": false
-    },
-    {
       "id": "task-1788338295823-2296773aaa0d9",
       "text": "check whether the tidal-disruption criterion also expects an enclosed mean density or a local density",
       "category": "important-not-urgent",
@@ -112,9 +100,9 @@
       "complete": false
     },
     {
-      "id": "task-1790168212183-143651839779c",
-      "text": "github url in paper",
-      "category": "not-important-not-urgent",
+      "id": "task-1791011056213-f41a6c010cb9f",
+      "text": "ALLOW_DIRECT_SUMMATION",
+      "category": "important-not-urgent",
       "complete": false
     }
   ]
